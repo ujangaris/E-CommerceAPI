@@ -2,9 +2,10 @@ const express = require('express')
 const app = express()
 const port = 3000
 const mongoose = require('mongoose')
+const config = require('./config/database')
 
 // Connect to db
-mongoose.connect('mongodb://localhost/miniecomm')
+mongoose.connect(config.database)
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
