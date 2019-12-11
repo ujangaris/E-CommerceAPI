@@ -20,11 +20,11 @@ app.use(express.static('public'))
 // })
 
 
-app.get('/', (req, res) => {
-    res.render('index', {
-        title: 'Home'
-    })
-})
+// Set routes
+const pages = require('./routes/pages.js')
+const adminPages = require('./routes/admin_pages.js')
+app.use('/admin/pages', adminPages)
+app.use('/', pages)
 
 //Start the server
 app.listen(port, () => {
