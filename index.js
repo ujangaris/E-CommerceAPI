@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const config = require('./config/database')
 const bodyParser = require('body-parser')
 const session = require('express-session')
-
+const expressValidator = require('express-validator')
 
 
 // Connect to db
@@ -35,6 +35,33 @@ app.use(session({
         secure: true
     }
 }))
+
+//Express Validator middleware
+app.use(app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        secure: true
+    }
+}))({
+    errorFormatter: function (param, msg, value) {
+        var namespace = param.split('.'),
+            root = namespace.shift(),
+            formParam = root
+
+        while (namespace.length) {
+            formParam += '[' + namespace.shift() + ']'
+        }
+        return {
+            param: formParam,
+            msg: msg,
+            value: value
+        }
+    }
+}))
+
+
 
 // app.get('/', (req, res) => {
 //     res.send('Hello World')
