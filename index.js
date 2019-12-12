@@ -3,7 +3,7 @@ const app = express()
 const port = 3000
 const mongoose = require('mongoose')
 const config = require('./config/database')
-
+const bodyParser = require('body-parser')
 // Connect to db
 mongoose.connect(config.database)
 var db = mongoose.connection;
@@ -14,6 +14,15 @@ db.once('open', function () {
 //view engin setup
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
+//body parser middleware
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({
+    extended: false
+}))
+// parse application/json
+app.use(bodyParser.json())
+
+
 
 // app.get('/', (req, res) => {
 //     res.send('Hello World')
