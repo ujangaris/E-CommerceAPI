@@ -4,6 +4,10 @@ const port = 3000
 const mongoose = require('mongoose')
 const config = require('./config/database')
 const bodyParser = require('body-parser')
+const session = require('express-session')
+
+
+
 // Connect to db
 mongoose.connect(config.database)
 var db = mongoose.connection;
@@ -22,7 +26,15 @@ app.use(bodyParser.urlencoded({
 // parse application/json
 app.use(bodyParser.json())
 
-
+//express session middleware
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        secure: true
+    }
+}))
 
 // app.get('/', (req, res) => {
 //     res.send('Hello World')
