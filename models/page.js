@@ -14,7 +14,7 @@ var PageSchema = monggose.Schema({
         required: true
     },
     sorting: {
-        type: String
+        type: Number
     }
 })
 
