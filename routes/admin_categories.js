@@ -7,17 +7,20 @@ const router = express.Router()
 var Category = require('../models/category')
 
 /* 
- *GET pages index
+ *GET Category index
  */
 
 
 router.get('/', (req, res) => {
-    res.send('cats index')
-    // Page.find({}).sort({ sorting: 1 }).exec(function (err, pages) {
-    //     res.render('admin/pages', {
-    //         pages: pages
-    //     })
-    // })
+    // res.send('cats index')
+    Category.find(function (err, categories) {
+        if (err) return console.log(err);
+
+
+        res.render('admin/categories', {
+            categories: categories
+        })
+    })
 })
 
 
