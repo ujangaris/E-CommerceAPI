@@ -8,7 +8,7 @@ const expressValidator = require('express-validator')
 const session = require('express-session')
 const flash = require('connect-flash');
 const messages = require('express-messages')
-
+const fileUpload = require('express-fileupload')
 
 // Connect to db
 mongoose.connect(config.database, { useUnifiedTopology: true, useNewUrlParser: true })
@@ -23,6 +23,9 @@ app.use(express.static('public'))
 
 // set global error variable
 app.locals.errors = null
+
+//Express fileUpload middleware
+app.use(fileUpload())
 
 
 //body parser middleware
@@ -82,9 +85,11 @@ app.use(function (req, res, next) {
 const pages = require('./routes/pages.js')
 const adminPages = require('./routes/admin_pages.js')
 const adminCategories = require('./routes/admin_categories.js')
+const adminProducts = require('./routes/admin_products.js')
 
 app.use('/admin/pages', adminPages)
 app.use('/admin/categories', adminCategories)
+app.use('/admin/products', adminProducts)
 app.use('/', pages)
 
 //Start the server
