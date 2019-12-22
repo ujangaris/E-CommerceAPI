@@ -11,7 +11,7 @@ const messages = require('express-messages')
 
 
 // Connect to db
-mongoose.connect(config.database)
+mongoose.connect(config.database, { useUnifiedTopology: true, })
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {

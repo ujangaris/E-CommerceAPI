@@ -11,7 +11,12 @@ var Page = require('../models/page')
 
 
 router.get('/', (req, res) => {
-    res.send('admin area')
+    // res.send('admin area')
+    Page.find({}).sort({ sorting: 1 }).exec(function (err, pages) {
+        res.render('admin/pages', {
+            pages: pages
+        })
+    })
 })
 
 
@@ -71,7 +76,7 @@ router.post('/add-page', (req, res) => {
                     title: title,
                     slug: slug,
                     content: content,
-                    sorting: 0
+                    sorting: 100
                 })
                 page.save(function (err) {
                     if (err) return console.log(err);
