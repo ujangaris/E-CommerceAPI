@@ -80,43 +80,15 @@ router.post('/add-category', (req, res) => {
 
 
 /* 
- *POST reorder pages
+ *GET edit category
  */
 
-
-router.post('/reorder-pages', (req, res) => {
-    var ids = req.body['id[]']
-
-    var count = 0
-
-    for (var i = 0; i < ids.length; i++) {
-        var id = ids[i]
-        count++
-        (function (count) {
-
-            Page.findById(id, function (err, page) {
-                page.sorting = count
-                page.save(function (err) {
-                    if (err) return console.log(err);
-                })
-            })
-        })(count)
-    }
-})
-
-
-/* 
- *GET edit page
- */
-
-router.get('/edit-page/:slug', (req, res) => {
-    Page.findOne({ slug: req.params.slug }, function (err, page) {
+router.get('/edit-category/:id', (req, res) => {
+    Category.findById(req.params.id, function (err, category) {
         if (err) return console.log(err);
-        res.render('admin/edit_page', {
-            title: page.title,
-            slug: page.slug,
-            content: page.content,
-            id: page._id
+        res.render('admin/edit_category', {
+            title: category.title,
+            id: category._id
         })
     })
 
