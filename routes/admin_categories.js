@@ -10,7 +10,6 @@ var Category = require('../models/category')
  *GET Category index
  */
 
-
 router.get('/', (req, res) => {
     // res.send('cats index')
     Category.find(function (err, categories) {
@@ -25,18 +24,14 @@ router.get('/', (req, res) => {
 
 
 /* 
- *GET add page
+ *GET add category
  */
 
-router.get('/add-page', (req, res) => {
+router.get('/add-category', (req, res) => {
     var title = ''
-    var slug = ''
-    var content = ''
 
-    res.render('admin/add_page', {
-        title: title,
-        slug: slug,
-        content: content
+    res.render('admin/add_category', {
+        title: title
     })
 })
 
