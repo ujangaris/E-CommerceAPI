@@ -11,7 +11,7 @@ const messages = require('express-messages')
 
 
 // Connect to db
-mongoose.connect(config.database, { useUnifiedTopology: true, })
+mongoose.connect(config.database, { useUnifiedTopology: true, useNewUrlParser: true })
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
@@ -86,5 +86,5 @@ app.use('/', pages)
 
 //Start the server
 app.listen(port, () => {
-    console.log(`Listening Server on prot ${port}`);
+    console.log(`Listening Server on port ${port}`);
 })

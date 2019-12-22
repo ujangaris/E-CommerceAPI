@@ -12,7 +12,7 @@
             <th>Delete</th>
         </tr>
     </thead>
-    <tbo dy>
+    <tbody>
         <% pages.forEach(function(page){%>
 
         <tr id="id_<%= page._id %>" class="<%= page.slug%>
@@ -28,23 +28,9 @@
 
         </tr>
         <%})%>
-    </tbo dy>
+    </tbody>
 
 </table>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
-<script>
-    $('tbody').sortable({
 
-        items: "tr:not('.home')",
-        placeholder: "ui-state-hightlight",
-        update: function () {
-            var ids = $('tbody').sortable("serialize")
-            var url = "/admin/pages/reorder-page"
-
-            $.post(url, ids)
-        }
-
-
-    })
-</script>
 <%- include ('../_layouts/adminfooter') %>
