@@ -4,8 +4,10 @@ const port = 3000
 const mongoose = require('mongoose')
 const config = require('./config/database')
 const bodyParser = require('body-parser')
+const expressValidator = require('express-validator')
 const session = require('express-session')
-// const expressValidator = require('express-validator')
+const flash = require('connect-flash');
+const messages = require('express-messages')
 
 
 // Connect to db
@@ -18,6 +20,10 @@ db.once('open', function () {
 //view engin setup
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
+
+// set global error variable
+app.locals.errors = null
+
 
 //body parser middleware
 // parse application/x-www-form-urlencoded
@@ -36,34 +42,31 @@ app.use(session({
         secure: true
     }
 }))
+// express flash
+app.use(flash());
 
 // //Express Validator middleware
-// app.use(expressValidator({
-//     errorFormatter: function (param, msg, value) {
-//         var namespace = param.split('.'),
-//             root = namespace.shift(),
-//             formParam = root;
+// app.use(expressValidator())
+// Validator
+app.use(expressValidator({
+    errorFormatter: function (param, msg, value) {
+        var namespace = param.split('.')
+            , root = namespace.shift()
+            , formParam = root;
 
-//         while (namespace.length) {
-//             formParam += '[' + namespace.shift() + ']';
-//         }
-//         return {
-//             param: formParam,
-//             msg: msg,
-//             value: value
-//         };
-//     }
-// }));
-// app.use(expressValidator({
-//     customSanitizers: {
-//         toSanitizeSomehow: function (value) {
-//             var newValue = value; //some operations
-//             return newValue;
-//         },
-//     }
-// }));
+        while (namespace.length) {
+            formParam += '[' + namespace.shift() + ']';
+        }
+        return {
+            param: formParam,
+            msg: msg,
+            value: value
+        };
+    }
+}));
 
-//Express Messagemiddleware
+
+//Express Message middleware
 app.use(require('connect-flash')());
 app.use(function (req, res, next) {
     res.locals.messages = require('express-messages')(req, res);
