@@ -5,6 +5,7 @@ const router = express.Router()
 
 //get Page model
 var Page = require('../models/page')
+
 /* 
  *GET pages index
  */
@@ -186,6 +187,21 @@ router.post('/edit-page/:slug', (req, res) => {
             }
         })
     }
+})
+
+
+/* 
+ *GET delete pages 
+ */
+
+
+router.get('/delete-page/:id', (req, res) => {
+
+    Page.findByIdAndRemove(req.params.id, function (err) {
+        if (err) return console.log(err);
+        req.flash('success', 'Page deleted')
+        res.redirect('/admin/pages/')
+    })
 })
 
 
