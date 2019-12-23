@@ -31,6 +31,25 @@ router.get('/', (req, res) => {
 })
 
 
+/* 
+ *GET add product
+ */
+
+router.get('/add-product', (req, res) => {
+    var title = ''
+    var desc = ''
+    var price = ''
+    Category.find(function (err, categories) {
+
+        res.render('admin/add_product', {
+            title: title,
+            desc: desc,
+            categories: categories,
+            price: price
+        })
+    })
+})
+
 
 
 

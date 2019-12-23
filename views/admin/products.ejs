@@ -1,13 +1,13 @@
 <%- include ('../_layouts/adminheader') %>
-<!-- <h2 class="page-title">Add a page</h2> -->
-<!-- <a href="/admin/pages" class="btn btn-primary">Back to All pages</a> -->
-<br><br>
 
-<% if (count> 0 ){ %>
+
 
 <h1 class="page-title">Products </h1>
 <a href="/admin/products/add-product" class="btn btn-primary">Add a new product</a>
-<table class="table table-striped ">
+<br><br>
+
+<% if (count> 0 ){ %>
+<table class="table table-striped">
     <thead>
         <tr class="home">
             <th>Product</th>
@@ -24,7 +24,7 @@
         <tr>
 
             <td><%= product.title %></td>
-            <td><%= parseFloat(product.price).toFixed(2) %></td>
+            <td>$<%= parseFloat(product.price).toFixed(2) %></td>
             <td><%= product.category %></td>
             <td>
                 <% if (product.image == ""){ %>
