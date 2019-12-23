@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const path = require('path');
 const port = 3000
 const mongoose = require('mongoose')
 const config = require('./config/database')
@@ -18,7 +19,10 @@ db.once('open', function () {
     console.log('Connect to mongodeb!');
 });
 //view engin setup
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs')
+
+
 app.use(express.static('public'))
 
 // set global error variable
@@ -45,8 +49,7 @@ app.use(session({
     //     secure: true
     // }
 }))
-// express flash
-app.use(flash());
+
 
 // //Express Validator middleware
 // app.use(expressValidator())
@@ -65,12 +68,32 @@ app.use(expressValidator({
             msg: msg,
             value: value
         };
+    },
+    customValidators: {
+        isImage: function (value, filename) {
+            var extension = (path.extname(filename)).toLowerCase();
+
+            switch (extension) {
+                case '.jpg':
+                    return '.jpg';
+                case '.jpeg':
+                    return '.jpeg';
+                case '.png':
+                    return '.png';
+                case '':
+                    return '.jpg';
+                default:
+                    return false;
+            }
+        }
+
     }
 }));
 
-
+// express flash
+app.use(flash());
 //Express Message middleware
-app.use(require('connect-flash')());
+// app.use(require('connect-flash')());
 app.use(function (req, res, next) {
     res.locals.messages = require('express-messages')(req, res);
     next();
@@ -87,6 +110,7 @@ const adminPages = require('./routes/admin_pages.js')
 const adminCategories = require('./routes/admin_categories.js')
 const adminProducts = require('./routes/admin_products.js')
 
+//use routes
 app.use('/admin/pages', adminPages)
 app.use('/admin/categories', adminCategories)
 app.use('/admin/products', adminProducts)

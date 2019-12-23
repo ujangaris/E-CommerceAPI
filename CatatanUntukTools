@@ -1,0 +1,5 @@
+-Wajib Gunakan :
+
+"express-fileupload": "^1.0.0",
+    "express-validator": "^3.2.1",
+   
